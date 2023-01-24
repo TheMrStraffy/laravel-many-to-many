@@ -28,6 +28,21 @@
             </select>
           </div>
 
+          <div class="mb-3 row">
+            @foreach ($technologies as $technology)
+            <div class="col-12 col-lg-2">
+
+                <input type="checkbox" name="technologies[]" id="technology{{$loop->iteration}}" value="{{$technology->id}}"
+                @if (!$errors->all() && $project->technologies->contains($technology))
+                checked
+                @elseif($errors->all() && in_array($technology->id,old('technologies',[])))
+                @endif
+                >
+                <label for="technology{{$loop->iteration}}">{{$technology->name}}</label>
+            </div>
+            @endforeach
+          </div>
+
           <div class="mb-3">
             <label for="summary" class="form-label">Summary</label>
             <textarea

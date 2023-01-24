@@ -99,8 +99,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.project.edit', compact('project','types'));
+        return view('admin.project.edit', compact('project','types','technologies'));
     }
 
     /**
@@ -112,6 +113,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        $technologies = Technology::all();
         $form_data = $request->all();
         if(array_key_exists('cover_image', $form_data)){
             if($project->cover_image){
@@ -127,6 +129,13 @@ class ProjectController extends Controller
             $form_data['slug'] = $project->slug;
         }
         $project->update($form_data);
+
+        if(array_key_exists('technologies', $form_data)){
+            $project->technologies()->sync($form_data['technologies']);
+        } else {
+            $project->technologies()->sync([]);
+        }
+
         return redirect()->route('admin.project.show', $project);
     }
 
