@@ -46,8 +46,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.project.create', compact('types'));
+        return view('admin.project.create', compact('types','technologies'));
     }
 
     /**
@@ -71,6 +72,11 @@ class ProjectController extends Controller
         // dd($new_project);
         $new_project->fill($form_data);
         $new_project->save();
+
+        if(array_key_exists('technologies', $form_data)){
+            $new_project->technologies()->attach($form_data['technologies']);
+        };
+
         return redirect()->route('admin.project.show', $new_project);
     }
 
