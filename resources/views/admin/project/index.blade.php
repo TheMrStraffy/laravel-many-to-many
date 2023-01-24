@@ -23,7 +23,14 @@
 
         <tr>
           <td>{{$project->id}}</td>
-          <td>{{$project->name}}</td>
+          <td>
+            {{$project->name}}
+            @forelse ($project->technologies as $technology)
+                    <span class="badge text-bg-primary">{{$technology->name}}</span>
+            @empty
+
+            @endforelse
+          </td>
           <td>{{$project->client_name}}</td>
           <td>{{$project->type?->name}}</td>
           <td class="d-flex">

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,7 @@ class ProjectController extends Controller
 
     public function index()
     {
+        $technologies = Technology::all();
         if(isset($_GET['search'])){
             $search = $_GET['search'];
             $projects = Project::where('name','like', "%$search%")->paginate(10);
@@ -29,7 +31,7 @@ class ProjectController extends Controller
 
             $projects = Project::orderBy('id','desc')->paginate(10);
         }
-        return view('admin.project.index',compact('projects'));
+        return view('admin.project.index',compact('projects','technologies'));
     }
 
 

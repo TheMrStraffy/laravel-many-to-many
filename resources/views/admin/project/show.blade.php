@@ -11,6 +11,12 @@
         @endif
         <div class="card-body overflow-y-scroll ">
           <h5 class="card-title">{{$project->name}}</h5>
+          <p>
+            @foreach ($project->technologies as $technology)
+            <span class="badge text-bg-primary">{{$technology->name}}</span>
+
+            @endforeach
+          </p>
           <p class="card-title">{{$project->client_name}}</p>
           <p class="card-title">{{$project->type?->name}}</p>
           <p class="card-text ">{{$project->summary}}</p>
