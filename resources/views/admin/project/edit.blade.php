@@ -3,6 +3,19 @@
 @section('content')
 
     <div class="container">
+
+        <div>
+            <ul>
+
+                @if ($errors->any())
+                    @foreach ($errors as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                @endif
+            </ul>
+
+        </div>
+
         <form class="mb-2" action="{{route('admin.project.update', $project)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -36,6 +49,7 @@
                 @if (!$errors->all() && $project->technologies->contains($technology))
                 checked
                 @elseif($errors->all() && in_array($technology->id,old('technologies',[])))
+                checked
                 @endif
                 >
                 <label for="technology{{$loop->iteration}}">{{$technology->name}}</label>

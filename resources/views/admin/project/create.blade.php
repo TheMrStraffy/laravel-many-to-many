@@ -3,6 +3,19 @@
 @section('content')
 
     <div class="container">
+
+        <div>
+            <ul>
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                @endif
+            </ul>
+
+        </div>
+
         <form action="{{route('admin.project.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
@@ -30,7 +43,7 @@
             <div class="col-12 col-lg-2">
 
                 <input type="checkbox" name="technologies[]" id="technology{{$loop->iteration}}" value="{{$technology->id}}"
-                @if (in_array($technology->id, old('$technologies',[])))
+                @if (in_array($technology->id, old('technologies',[])))
                 checked
                 @endif
                 >
